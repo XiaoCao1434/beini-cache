@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
+/**
+ * 单独的所有的Redis操作集合类
+ * @author lb_chen
+ */
 public class BeiniAllRedisUtil {
 	private RedisTemplate<String, Object> redisTemplate;
 
