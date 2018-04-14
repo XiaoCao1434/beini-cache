@@ -2,7 +2,14 @@ package com.beini.cache.utils;
 
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+/**
+ * 针对常见的查找key值和过期时间的常见方法
+ * @author lb_chen
+ *
+ */
+@Component
 @SuppressWarnings("unchecked")
 public class BeiniCommonRedisUtil extends BeiniRedisUtil {
 	/**

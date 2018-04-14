@@ -7,8 +7,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
+
 /**
- * 单独的所有的Redis操作集合类
+ * 单独的所有的Redis操作集合类 <br>
+ * 如果该方法需要注解使用，需要在配置类中单独添加Bean
+ * 
  * @author lb_chen
  */
 public class BeiniAllRedisUtil {
@@ -145,7 +148,6 @@ public class BeiniAllRedisUtil {
 	 * 递增
 	 * 
 	 * @param key
-	 *            键
 	 * @param by
 	 *            要增加几(大于0)
 	 * @return

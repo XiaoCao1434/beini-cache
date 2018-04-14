@@ -2,6 +2,8 @@ package com.beini.cache.utils;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+@Component
 public class BeiniSetRedisUtil extends BeiniCommonRedisUtil{
 	/**
 	 * 根据key获取Set中的所有值

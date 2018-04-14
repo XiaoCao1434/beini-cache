@@ -2,6 +2,8 @@ package com.beini.cache.utils;
 
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.stereotype.Component;
+@Component
 public class BeiniStringRedisUtil extends BeiniCommonRedisUtil{
 	/**
 	 * 普通缓存获取
@@ -58,6 +60,19 @@ public class BeiniStringRedisUtil extends BeiniCommonRedisUtil{
 			return false;
 		}
 	}
+	public boolean set(String key, Object value, long time, TimeUnit seconds) {
+		try {
+			if (time > 0) {
+				redisTemplate.opsForValue().set(key, value, time,seconds);
+			} else {
+				set(key, value);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	/**
 	 * 递增
@@ -90,4 +105,6 @@ public class BeiniStringRedisUtil extends BeiniCommonRedisUtil{
 		}
 		return redisTemplate.opsForValue().increment(key, -delta);
 	}
+
+	
 }

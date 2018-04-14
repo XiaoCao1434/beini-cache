@@ -8,13 +8,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import com.beini.cache.annotation.CacheKey;
 import com.beini.cache.annotation.Cacheable;
 import com.beini.cache.annotation.Cacheable.KeyMode;
+import com.beini.cache.utils.BeiniStringRedisUtil;
 
 /**
  * 缓存环绕通知处理类
@@ -22,12 +21,11 @@ import com.beini.cache.annotation.Cacheable.KeyMode;
  */
 @Aspect
 @Component
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class CacheableAop {
 	/** key值拼接分割符 */
 	private static final String SEPARATOR = ".";
 	@Autowired
-	private RedisTemplate redisTemplate;
+	BeiniStringRedisUtil beiniStringRedisUtil;
 
 	/**
 	 * 基本的切面流程如下:<br>
@@ -50,9 +48,9 @@ public class CacheableAop {
 	@Around("@annotation(cache)")
 	public Object cached(final ProceedingJoinPoint pjp, Cacheable cache) throws Throwable {
 		String key = getCacheKey(pjp, cache);
-		ValueOperations valueOper = redisTemplate.opsForValue();
+		//BeiniStringRedisUtil beiniStringRedisUtil= new BeiniStringRedisUtil();
 		/* 从缓存获取数据 */
-		Object value = valueOper.get(key);
+		Object value = beiniStringRedisUtil.get(key);
 		if (value != null) {
 			/* 如果有数据,则直接返回 */
 			return value;
@@ -62,10 +60,10 @@ public class CacheableAop {
 		if (value != null) {
 			/* 如果没有设置过期时间,则无限期缓存 */
 			if (cache.expire() <= 0) {
-				valueOper.set(key, value);
+				beiniStringRedisUtil.set(key, value);
 			} /* 否则设置缓存时间 */
 			else {
-				valueOper.set(key, value, cache.expire(), TimeUnit.SECONDS);
+				beiniStringRedisUtil.set(key, value, cache.expire(), TimeUnit.SECONDS);
 			}
 		}
 		return value;

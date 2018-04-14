@@ -2,6 +2,8 @@ package com.beini.cache.utils;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+@Component
 public class BeiniMapRedisUtil extends BeiniCommonRedisUtil{
 	/**
 	 * HashGet

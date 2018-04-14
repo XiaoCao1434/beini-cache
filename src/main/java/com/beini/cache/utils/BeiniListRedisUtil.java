@@ -2,6 +2,8 @@ package com.beini.cache.utils;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+@Component
 public class BeiniListRedisUtil extends BeiniCommonRedisUtil{
 	/**
 	 * 获取list缓存的内容
