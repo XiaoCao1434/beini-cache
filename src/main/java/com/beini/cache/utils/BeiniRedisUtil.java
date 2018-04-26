@@ -1,6 +1,7 @@
 package com.beini.cache.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 /**
@@ -9,6 +10,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public abstract class BeiniRedisUtil {
-	@Autowired
+	@Resource(name="beiniRedisTemplate")
 	RedisTemplate<String, Object> redisTemplate;
 }

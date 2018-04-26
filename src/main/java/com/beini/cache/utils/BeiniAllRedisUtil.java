@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -14,7 +17,9 @@ import org.springframework.util.CollectionUtils;
  * 
  * @author lb_chen
  */
+@Component("beiniRedisUtil")
 public class BeiniAllRedisUtil {
+	@Resource(name="beiniRedisTemplate")
 	private RedisTemplate<String, Object> redisTemplate;
 
 	public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
@@ -522,9 +527,9 @@ public class BeiniAllRedisUtil {
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, Object value) {
+	public boolean lPush(String key, Object value) {
 		try {
-			redisTemplate.opsForList().rightPush(key, value);
+			redisTemplate.opsForList().leftPush(key, value);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -543,9 +548,9 @@ public class BeiniAllRedisUtil {
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, Object value, long time) {
+	public boolean lPush(String key, Object value, long time) {
 		try {
-			redisTemplate.opsForList().rightPush(key, value);
+			redisTemplate.opsForList().leftPush(key, value);
 			if (time > 0)
 				expire(key, time);
 			return true;
@@ -566,9 +571,9 @@ public class BeiniAllRedisUtil {
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, List<Object> value) {
+	public boolean lPushAll(String key, List<Object> value) {
 		try {
-			redisTemplate.opsForList().rightPushAll(key, value);
+			redisTemplate.opsForList().leftPushAll(key, value);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -587,15 +592,63 @@ public class BeiniAllRedisUtil {
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, List<Object> value, long time) {
+	public boolean lPushAll(String key, List<Object> value, long time) {
 		try {
-			redisTemplate.opsForList().rightPushAll(key, value);
+			redisTemplate.opsForList().leftPushAll(key, value);
 			if (time > 0)
 				expire(key, time);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	/**
+	 * 从list中的左边取出数据
+	 * 
+	 * @param key
+	 *            键
+	 * @return
+	 */
+	public Object lPop(String key) {
+		try {
+			return redisTemplate.opsForList().leftPop(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * 从list中的右边取出数据
+	 * 
+	 * @param key
+	 *            键
+	 * @return
+	 */
+	public Object rPop(String key) {
+		try {
+			return redisTemplate.opsForList().rightPop(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * 从list中的右边取出所有数据
+	 * 
+	 * @param key
+	 *            键
+	 * @return
+	 */
+	public Object rPopAll(String key) {
+		try {
+			return redisTemplate.opsForList().rightPop(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

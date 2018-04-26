@@ -3,8 +3,146 @@ package com.beini.cache.utils;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
 @Component
-public class BeiniListRedisUtil extends BeiniCommonRedisUtil{
+public class BeiniListRedisUtil extends BeiniCommonRedisUtil {
+
+	/**
+	 * 将list放入缓存
+	 * 
+	 * @param key
+	 *            键
+	 * @param value
+	 *            值
+	 * @param time
+	 *            时间(秒)
+	 * @return
+	 */
+	public boolean lPush(String key, Object value) {
+		try {
+			redisTemplate.opsForList().leftPush(key, value);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 将list放入缓存
+	 * 
+	 * @param key
+	 *            键
+	 * @param value
+	 *            值
+	 * @param time
+	 *            时间(秒)
+	 * @return
+	 */
+	public boolean lPush(String key, Object value, long time) {
+		try {
+			redisTemplate.opsForList().leftPush(key, value);
+			if (time > 0)
+				expire(key, time);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 将list放入缓存
+	 * 
+	 * @param key
+	 *            键
+	 * @param value
+	 *            值
+	 * @param time
+	 *            时间(秒)
+	 * @return
+	 */
+	public boolean lPushAll(String key, List<Object> value) {
+		try {
+			redisTemplate.opsForList().leftPushAll(key, value);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 将list放入缓存
+	 * 
+	 * @param key
+	 *            键
+	 * @param value
+	 *            值
+	 * @param time
+	 *            时间(秒)
+	 * @return
+	 */
+	public boolean lPushAll(String key, List<Object> value, long time) {
+		try {
+			redisTemplate.opsForList().leftPushAll(key, value);
+			if (time > 0)
+				expire(key, time);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 从list中的左边取出数据
+	 * 
+	 * @param key
+	 *            键
+	 * @return
+	 */
+	public Object lPop(String key) {
+		try {
+			return redisTemplate.opsForList().leftPop(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * 从list中的右边取出数据
+	 * 
+	 * @param key
+	 *            键
+	 * @return
+	 */
+	public Object rPop(String key) {
+		try {
+			return redisTemplate.opsForList().rightPop(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * 从list中的右边取出所有数据
+	 * 
+	 * @param key
+	 *            键
+	 * @return
+	 */
+	public Object rPopAll(String key) {
+		try {
+			return redisTemplate.opsForList().rightPop(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	/**
 	 * 获取list缓存的内容
 	 * 
@@ -70,7 +208,7 @@ public class BeiniListRedisUtil extends BeiniCommonRedisUtil{
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, Object value) {
+	public boolean rPush(String key, Object value) {
 		try {
 			redisTemplate.opsForList().rightPush(key, value);
 			return true;
@@ -91,7 +229,7 @@ public class BeiniListRedisUtil extends BeiniCommonRedisUtil{
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, Object value, long time) {
+	public boolean rPush(String key, Object value, long time) {
 		try {
 			redisTemplate.opsForList().rightPush(key, value);
 			if (time > 0)
@@ -114,7 +252,7 @@ public class BeiniListRedisUtil extends BeiniCommonRedisUtil{
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, List<Object> value) {
+	public boolean rPushAll(String key, List<Object> value) {
 		try {
 			redisTemplate.opsForList().rightPushAll(key, value);
 			return true;
@@ -135,7 +273,7 @@ public class BeiniListRedisUtil extends BeiniCommonRedisUtil{
 	 *            时间(秒)
 	 * @return
 	 */
-	public boolean lSet(String key, List<Object> value, long time) {
+	public boolean rPushAll(String key, List<Object> value, long time) {
 		try {
 			redisTemplate.opsForList().rightPushAll(key, value);
 			if (time > 0)
