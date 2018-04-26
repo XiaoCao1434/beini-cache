@@ -21,6 +21,11 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.beini</groupId>
+			<artifactId>beini-core</artifactId>
+			<version>0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 			<optional>true</optional>
@@ -35,7 +40,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

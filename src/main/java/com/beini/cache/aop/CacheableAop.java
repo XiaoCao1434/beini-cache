@@ -14,6 +14,7 @@ import com.beini.cache.annotation.CacheKey;
 import com.beini.cache.annotation.Cacheable;
 import com.beini.cache.annotation.Cacheable.KeyMode;
 import com.beini.cache.utils.BeiniStringRedisUtil;
+import com.beini.core.utils.JsonUtil;
 
 /**
  * 缓存环绕通知处理类
@@ -50,7 +51,7 @@ public class CacheableAop {
 		String key = getCacheKey(pjp, cache);
 		//BeiniStringRedisUtil beiniStringRedisUtil= new BeiniStringRedisUtil();
 		/* 从缓存获取数据 */
-		Object value = beiniStringRedisUtil.get(key);
+		Object value = JsonUtil.stringToBean(""+beiniStringRedisUtil.get(key), cache.clazz());
 		if (value != null) {
 			/* 如果有数据,则直接返回 */
 			return value;
@@ -60,10 +61,10 @@ public class CacheableAop {
 		if (value != null) {
 			/* 如果没有设置过期时间,则无限期缓存 */
 			if (cache.expire() <= 0) {
-				beiniStringRedisUtil.set(key, value);
+				beiniStringRedisUtil.set(key, JsonUtil.beanToString(value));
 			} /* 否则设置缓存时间 */
 			else {
-				beiniStringRedisUtil.set(key, value, cache.expire(), TimeUnit.SECONDS);
+				beiniStringRedisUtil.set(key, JsonUtil.beanToString(value), cache.expire(), TimeUnit.SECONDS);
 			}
 		}
 		return value;

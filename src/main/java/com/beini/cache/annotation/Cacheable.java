@@ -35,6 +35,9 @@ public @interface Cacheable {
 
 	/** key的后缀模式 */
 	public KeyMode keyMode() default KeyMode.DEFAULT;
+	
+	/** 返回值类的class<br>必填属性<br>&nbsp;&nbsp;如 ：String.class*/
+	public Class<?> clazz() ;
 
 	/** 缓存多少秒,默认为0,无限期 */
 	public int expire() default 0;
