@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
  * @author lb_chen
  *
  */
+@Deprecated
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
 public @interface Cacheable {

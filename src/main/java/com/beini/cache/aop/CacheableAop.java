@@ -20,6 +20,7 @@ import com.beini.core.utils.JsonUtil;
  * 缓存环绕通知处理类
  * @author lb_chen
  */
+@SuppressWarnings("deprecation")
 @Aspect
 @Component
 public class CacheableAop {
