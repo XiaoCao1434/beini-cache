@@ -1,5 +1,6 @@
 package com.beini.cache.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -452,12 +453,54 @@ public class BeiniAllRedisUtil {
 	 * @return 移除的个数
 	 */
 	public long setRemove(String key, Object... values) {
+		if(key == null) {
+			return 0;
+		}
 		try {
 			Long count = redisTemplate.opsForSet().remove(key, values);
 			return count;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
+		}
+	}
+	
+	public Object sGetRondomMember(String key) {
+		if(key == null) {
+			return null;
+		}
+		try {
+			Object result = redisTemplate.opsForSet().randomMember(key);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public List<Object> sGetRondomMember(String key,int count) {
+		if(key== null) {
+			return null;
+		}
+		List<Object> list = new ArrayList<Object>();
+		try {
+			list = redisTemplate.opsForSet().randomMembers(key,count);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return list;
+		}
+	}
+	
+	public Object sPop(String key) {
+		if(key== null) {
+			return null;
+		}
+		try {
+			Object result = redisTemplate.opsForSet().pop(key);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	// ===============================list=================================
