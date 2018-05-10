@@ -20,8 +20,8 @@ import org.springframework.util.ClassUtils;
 import com.beini.cache.utils.BeiniAllRedisUtil;
 import com.beini.cache.utils.BeiniListRedisUtil;
 import com.beini.cache.utils.BeiniMapRedisUtil;
-import com.beini.cache.utils.BeiniSetRedisUtil;
 import com.beini.cache.utils.BeiniStringRedisUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -106,10 +106,10 @@ public class RedisUtilConfig extends CachingConfigurerSupport {
 		return new BeiniMapRedisUtil();
 	}
 
-	@Bean
+	/*@Bean
 	public BeiniSetRedisUtil getBeiniSetRedisUtil() {
 		return new BeiniSetRedisUtil();
-	}
+	}*/
 
 	@Bean
 	public BeiniAllRedisUtil getBeiniAllRedisUtil() {
